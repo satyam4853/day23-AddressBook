@@ -7,11 +7,38 @@ namespace AddressBookUsingLambdaExpression
    public class AddressBookDetails
     {
 
-         
         //list for storing objects for person class
-        private static List<Person> contacts = new List<Person>();
-        public static void AddMember()
+
+        private List<Person> contacts;
+        //address book dictioanry to store values
+        private static Dictionary<string, List<Person>> addressBookDictionary = new Dictionary<string, List<Person>>();
+        public void AddMember()
         {
+            string addressBookName;
+            contacts = new List<Person>();
+            while (true)
+            {
+                Console.WriteLine("Enter The Name of the Address Book");
+                addressBookName = Console.ReadLine();
+                //Checking uniqueness of address books
+                if (addressBookDictionary.Count > 0)
+                {
+                    if (addressBookDictionary.ContainsKey(addressBookName))
+                    {
+                        Console.WriteLine("This name of address book already exists");
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+
             Console.Write("Enter Number of contacts you want to add:");
             int numOfContacts = Convert.ToInt32(Console.ReadLine());
             while (numOfContacts > 0)
@@ -62,34 +89,42 @@ namespace AddressBookUsingLambdaExpression
                         Console.WriteLine("Enter Valid Email Id. It should Contains @ ");
                     }
                 }
+                //
                 contacts.Add(person);
+                Console.WriteLine("***************************************");
 
-                Console.WriteLine("**************Successfully Added****************");
                 numOfContacts--;
             }
+            //adding into address book dictionary
+            addressBookDictionary.Add(addressBookName, contacts);
+            Console.WriteLine("**************Successfully Added****************");
         }
 
         //method for view Contacts
-        public static void ViewContacts()
+        public void ViewContacts()
         {
-            if (contacts.Count > 0)
+            if (addressBookDictionary.Count > 0)
             {
-                Console.WriteLine("***************Your Contact List Has********************");
-                foreach (var x in contacts)
+                //printing the values in address book
+                foreach (KeyValuePair<string, List<Person>> dict in addressBookDictionary)
                 {
-                    PrintValues(x);
-                    Console.WriteLine("**************************");
+                    Console.WriteLine($"******************{dict.Key}*********************");
+                    foreach (var addressBook in dict.Value)
+                    {
+                        PrintValues(addressBook);
+                        Console.WriteLine("*******************************************************");
+                    }
                 }
-
             }
             else
             {
                 Console.WriteLine("Address Book is Empty");
             }
+
         }
 
         //Printing values
-        public static void PrintValues(Person x)
+        public void PrintValues(Person x)
         {
             Console.WriteLine($"First Name : {x.firstName}");
             Console.WriteLine($"Last Name : {x.lastName}");
@@ -99,11 +134,10 @@ namespace AddressBookUsingLambdaExpression
             Console.WriteLine($"Zip Code: {x.zipCode}");
             Console.WriteLine($"Phone Number: {x.phoneNumber}");
             Console.WriteLine($"Email: {x.email}");
-
         }
 
         //method for editing details
-        public static void EditDetails()
+        public void EditDetails()
         {
             int f;//flag variable
             if (contacts.Count > 0)
@@ -214,7 +248,7 @@ namespace AddressBookUsingLambdaExpression
         }
 
         //method for deleting conatcts
-        public static void DeleteDetails()
+        public void DeleteDetails()
         {
             int f = 0;
             if (contacts.Count > 0)
