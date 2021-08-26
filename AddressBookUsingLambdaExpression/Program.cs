@@ -10,7 +10,7 @@ namespace AddressBookUsingLambdaExpression
             while (true)
             {
                 Console.WriteLine("*********************************************************");
-                Console.WriteLine("1. Add member to Contact list \n2.View Members in Contact List\n3.Edit members Contacts list\n4.Delete members Contacts list\n5.Exit");
+                Console.WriteLine("1. Add member to Contact list \n2.View Members in Contact List\n3.Edit members Contacts lists\n4.Exit");
                 Console.WriteLine("Enter an option:");
                 switch (Convert.ToInt32(Console.ReadLine()))
                 {
@@ -24,9 +24,6 @@ namespace AddressBookUsingLambdaExpression
                         AddressBookDetails.EditDetails();
                         break;
                     case 4:
-                        AddressBookDetails.DeleteDetails();
-                        break;
-                    case 5:
                         // to exit from main method
                         Console.WriteLine("Exited");
                         return;
